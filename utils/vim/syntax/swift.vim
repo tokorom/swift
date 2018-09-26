@@ -10,7 +10,6 @@ endif
 syn keyword swiftKeyword
       \ associatedtype
       \ break
-      \ case
       \ catch
       \ continue
       \ default
@@ -104,6 +103,11 @@ syn keyword swiftBoolean
 syn keyword swiftNil
       \ nil
 
+syn keyword swiftCase skipwhite nextgroup=swiftCaseValue
+      \ case
+syn match swiftCaseValue contained skipwhite nextgroup=swiftArgumentsRegion
+      \ /\<[A-Za-z_][A-Za-z_0-9\.]*\>/
+
 syn match swiftImportModule contained nextgroup=swiftImportComponent
       \ /\<[A-Za-z_][A-Za-z_0-9]*\>/
 syn match swiftImportComponent contained nextgroup=swiftImportComponent
@@ -181,6 +185,7 @@ hi def link swiftImport Include
 hi def link swiftImportModule Title
 hi def link swiftImportComponent Identifier
 hi def link swiftKeyword Statement
+hi def link swiftCase Statement
 hi def link swiftMultiwordKeyword Statement
 hi def link swiftTypeDefinition Define
 hi def link swiftMultiwordTypeDefinition Define
