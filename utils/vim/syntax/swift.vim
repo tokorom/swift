@@ -135,7 +135,7 @@ syn region swiftType contained contains=swiftType,swiftParamDelim
 syn match swiftParamDelim contained
       \ /,/
 " <Generic Clause> (generics)
-syn region swiftTypeParameters contained contains=swiftVarName,swiftConstraint skipwhite nextgroup=swiftArgumentsRegion
+syn region swiftTypeParameters contained contains=swiftVarName,swiftConstraint skipwhite nextgroup=swiftTypeDeclaration,swiftArgumentsRegion
       \ matchgroup=Delimiter start="<" end=">" matchgroup=NONE skip=","
 syn keyword swiftConstraint contained
       \ where
