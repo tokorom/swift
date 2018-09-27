@@ -147,7 +147,7 @@ syn match swiftTypeDeclaration skipwhite nextgroup=swiftType
 
 syn region swiftParenthesisRegion matchgroup=NONE start=/(/ end=/)/ contains=TOP
 
-syn region swiftArgumentsRegion contained contains=swiftTypeDeclaration,swiftAttribute,swiftDefinitionModifier
+syn region swiftArgumentsRegion contained contains=swiftTypeDeclaration,swiftAttribute,swiftDefinitionModifier,swiftOperator
       \ matchgroup=NONE start=/(/ end=/)/
 
 syn region swiftString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=swiftInterpolationRegion
