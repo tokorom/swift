@@ -148,6 +148,9 @@ syn match swiftTypeDeclarationArrow skipwhite skipempty nextgroup=swiftType
 syn region swiftParenthesisRegion matchgroup=NONE start=/(/ end=/)/ contains=TOP,swiftTypeDeclarationColon
 syn region swiftArgumentsRegion matchgroup=swiftArgumentsParenthesis start=/(/ end=/)/ contained contains=TOP
 
+syn match swiftCurlyBracketOpen skipwhite nextgroup=swiftArgumentsRegion
+      \ /{/
+
 syn region swiftString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=swiftInterpolationRegion
 syn region swiftInterpolationRegion matchgroup=swiftInterpolation start=/\\(/ end=/)/ contained contains=TOP
 syn region swiftComment start="/\*" end="\*/" contains=swiftComment,swiftLineComment,swiftTodo
