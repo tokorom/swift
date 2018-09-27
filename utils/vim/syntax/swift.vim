@@ -61,7 +61,7 @@ syn keyword swiftIdentifierKeyword
       \ self
       \ super
 
-syn keyword swiftFuncKeywordGeneral skipwhite skipempty nextgroup=swiftTypeParameters
+syn keyword swiftFuncKeywordGeneral skipwhite skipempty nextgroup=swiftTypeParameters,swiftArgumentsRegion
       \ init
 
 syn keyword swiftFuncKeyword
@@ -109,7 +109,7 @@ syn match swiftImportModule contained nextgroup=swiftImportComponent
 syn match swiftImportComponent contained nextgroup=swiftImportComponent
       \ /\.\<[A-Za-z_][A-Za-z_0-9]*\>/
 
-syn match swiftTypeName contained skipwhite skipempty nextgroup=swiftTypeParameters
+syn match swiftTypeName contained skipwhite skipempty nextgroup=swiftTypeParameters,swiftArgumentsRegion
       \ /\<[A-Za-z_][A-Za-z_0-9\.]*\>/
 syn match swiftVarName contained skipwhite skipempty nextgroup=swiftTypeDeclarationColon
       \ /\<[A-Za-z_][A-Za-z_0-9]*\>/
@@ -131,7 +131,7 @@ syn region swiftType contained contains=swiftType,swiftParamDelim
 syn match swiftParamDelim contained
       \ /,/
 " <Generic Clause> (generics)
-syn region swiftTypeParameters contained contains=swiftVarName,swiftConstraint
+syn region swiftTypeParameters contained contains=swiftVarName,swiftConstraint skipwhite nextgroup=swiftArgumentsRegion
       \ matchgroup=Delimiter start="<" end=">" matchgroup=NONE skip=","
 syn keyword swiftConstraint contained
       \ where
@@ -141,7 +141,8 @@ syn match swiftTypeDeclarationColon skipwhite skipempty nextgroup=swiftType,swif
 syn match swiftTypeDeclarationArrow skipwhite skipempty nextgroup=swiftType
       \ /->/
 
-syn region swiftParenthesisRegion matchgroup=NONE start=/(/ end=/)/ contains=TOP
+syn region swiftParenthesisRegion matchgroup=NONE start=/(/ end=/)/ contains=TOP,swiftTypeDeclarationColon
+syn region swiftArgumentsRegion matchgroup=swiftArgumentsParenthesis start=/(/ end=/)/ contained contains=TOP
 
 syn region swiftString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=swiftInterpolationRegion
 syn region swiftInterpolationRegion matchgroup=swiftInterpolation start=/\\(/ end=/)/ contained contains=TOP
@@ -153,8 +154,8 @@ syn match swiftHex /[+\-]\?\<0x[0-9A-Fa-f][0-9A-Fa-f_]*\(\([.][0-9A-Fa-f_]*\)\?[
 syn match swiftOct /[+\-]\?\<0o[0-7][0-7_]*\>/
 syn match swiftBin /[+\-]\?\<0b[01][01_]*\>/
 
-syn match swiftOperator +\.\@<!\.\.\.\@!\|[/=\-+*%<>!&|^~]\@<!\(/[/*]\@![/=\-+*%<>!&|^~]*\|*/\@![/=\-+*%<>!&|^~]*\|->\@![/=\-+*%<>!&|^~]*\|[=+%<>!&|^~][/=\-+*%<>!&|^~]*\)+ skipwhite skipempty nextgroup=swiftTypeParameters
-syn match swiftOperator "\.\.[<.]" skipwhite skipempty nextgroup=swiftTypeParameters
+syn match swiftOperator +\.\@<!\.\.\.\@!\|[/=\-+*%<>!&|^~]\@<!\(/[/*]\@![/=\-+*%<>!&|^~]*\|*/\@![/=\-+*%<>!&|^~]*\|->\@![/=\-+*%<>!&|^~]*\|[=+%<>!&|^~][/=\-+*%<>!&|^~]*\)+ skipwhite skipempty nextgroup=swiftTypeParameters,swiftArgumentsRegion
+syn match swiftOperator "\.\.[<.]" skipwhite skipempty nextgroup=swiftTypeParameters,swiftArgumentsRegion
 
 syn match swiftChar /'\([^'\\]\|\\\(["'tnr0\\]\|x[0-9a-fA-F]\{2}\|u[0-9a-fA-F]\{4}\|U[0-9a-fA-F]\{8}\)\)'/
 
