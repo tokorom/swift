@@ -111,7 +111,7 @@ syn match swiftImportComponent contained nextgroup=swiftImportComponent
 
 syn match swiftTypeName contained skipwhite skipempty nextgroup=swiftTypeParameters
       \ /\<[A-Za-z_][A-Za-z_0-9\.]*\>/
-syn match swiftVarName contained skipwhite skipempty nextgroup=swiftTypeDeclaration
+syn match swiftVarName contained skipwhite skipempty nextgroup=swiftTypeDeclarationColon
       \ /\<[A-Za-z_][A-Za-z_0-9]*\>/
 syn match swiftImplicitVarName
       \ /\$\<[A-Za-z_0-9]\+\>/
@@ -122,7 +122,7 @@ syn match swiftType contained skipwhite skipempty nextgroup=swiftTypeParameters
 " [Type:Type] (dictionary) or [Type] (array)
 syn region swiftType contained contains=swiftTypePair,swiftType
       \ matchgroup=Delimiter start=/\[/ end=/\]/
-syn match swiftTypePair contained skipwhite skipempty nextgroup=swiftTypeParameters,swiftTypeDeclaration
+syn match swiftTypePair contained skipwhite skipempty nextgroup=swiftTypeParameters,swiftTypeDeclarationColon
       \ /\<[A-Za-z_][A-Za-z_0-9\.]*\>[!?]\?/
 " (Type[, Type]) (tuple)
 " FIXME: we should be able to use skip="," and drop swiftParamDelim
@@ -136,9 +136,9 @@ syn region swiftTypeParameters contained contains=swiftVarName,swiftConstraint
 syn keyword swiftConstraint contained
       \ where
 
-syn match swiftTypeDeclaration skipwhite skipempty nextgroup=swiftType,swiftInOutKeyword
+syn match swiftTypeDeclarationColon skipwhite skipempty nextgroup=swiftType,swiftInOutKeyword
       \ /:/
-syn match swiftTypeDeclaration skipwhite skipempty nextgroup=swiftType
+syn match swiftTypeDeclarationArrow skipwhite skipempty nextgroup=swiftType
       \ /->/
 
 syn region swiftParenthesisRegion matchgroup=NONE start=/(/ end=/)/ contains=TOP
@@ -199,7 +199,8 @@ hi def link swiftVarDefinition Define
 hi def link swiftVarName Identifier
 hi def link swiftImplicitVarName Identifier
 hi def link swiftIdentifierKeyword Identifier
-hi def link swiftTypeDeclaration Delimiter
+hi def link swiftTypeDeclarationColon Delimiter
+hi def link swiftTypeDeclarationArrow Delimiter
 hi def link swiftTypeParameters Delimiter
 hi def link swiftBoolean Boolean
 hi def link swiftString String
