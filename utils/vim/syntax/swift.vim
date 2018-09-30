@@ -117,7 +117,7 @@ syn match swiftImplicitVarName
       \ /\$\<[A-Za-z_0-9]\+\>/
 
 " TypeName[Optionality]?
-syn match swiftType contained skipwhite nextgroup=swiftTypeParameters
+syn match swiftType contained skipwhite skipnl nextgroup=swiftTypeParameters,swiftConstraint,swiftConstraintOperator
       \ /\<[A-Za-z_][A-Za-z_0-9\.]*\>[!?]\?/
 " [Type:Type] (dictionary) or [Type] (array)
 syn region swiftType contained contains=swiftTypePair,swiftType
@@ -131,10 +131,12 @@ syn region swiftType contained contains=swiftType,swiftParamDelim
 syn match swiftParamDelim contained
       \ /,/
 " <Generic Clause> (generics)
-syn region swiftTypeParameters contained contains=swiftVarName,swiftConstraint
+syn region swiftTypeParameters contained contains=swiftVarName skipwhite skipnl nextgroup=swiftConstraint
       \ matchgroup=Delimiter start="<" end=">" matchgroup=NONE skip=","
-syn keyword swiftConstraint contained
+syn keyword swiftConstraint contained skipwhite skipnl nextgroup=swiftType
       \ where
+syn match swiftConstraintOperator contained skipwhite skipnl nextgroup=swiftType
+      \ /==/
 
 syn match swiftTypeDeclaration skipwhite nextgroup=swiftType,swiftInOutKeyword
       \ /:/
@@ -189,7 +191,7 @@ hi def link swiftMultiwordTypeDefinition Define
 hi def link swiftType Type
 hi def link swiftTypePair Type
 hi def link swiftTypeName Function
-hi def link swiftConstraint Special
+hi def link swiftConstraint Statement
 hi def link swiftFuncDefinition Define
 hi def link swiftDefinitionModifier Define
 hi def link swiftInOutKeyword Define
@@ -211,6 +213,7 @@ hi def link swiftHex Number
 hi def link swiftOct Number
 hi def link swiftBin Number
 hi def link swiftOperator Function
+hi def link swiftConstraintOperator Function
 hi def link swiftChar Character
 hi def link swiftLabel Operator
 hi def link swiftMutating Statement
