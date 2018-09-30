@@ -121,13 +121,13 @@ syn match swiftType contained skipwhite nextgroup=swiftTypeParameters
       \ /\<[A-Za-z_][A-Za-z_0-9\.]*\>[!?]\?/
 " [Type:Type] (dictionary) or [Type] (array)
 syn region swiftType contained contains=swiftTypePair,swiftType
-      \ matchgroup=Delimiter start=/\[/ end=/\]/
+      \ matchgroup=Delimiter start=/\[/ end=/\][!?]\?/
 syn match swiftTypePair contained skipwhite nextgroup=swiftTypeParameters,swiftTypeDeclaration
       \ /\<[A-Za-z_][A-Za-z_0-9\.]*\>[!?]\?/
 " (Type[, Type]) (tuple)
 " FIXME: we should be able to use skip="," and drop swiftParamDelim
 syn region swiftType contained contains=swiftType,swiftParamDelim
-      \ matchgroup=Delimiter start="[^@]\?(" end=")" matchgroup=NONE skip=","
+      \ matchgroup=Delimiter start="[^@]\?(" end=")[!?]\?" matchgroup=NONE skip=","
 syn match swiftParamDelim contained
       \ /,/
 " <Generic Clause> (generics)
