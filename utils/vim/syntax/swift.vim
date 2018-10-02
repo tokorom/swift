@@ -120,21 +120,23 @@ syn match swiftImplicitVarName
 syn match swiftType contained skipwhite skipempty nextgroup=swiftTypeParameters
       \ /\<[A-Za-z_][A-Za-z_0-9\.]*\>[!?]\?/
 " [Type:Type] (dictionary) or [Type] (array)
-syn region swiftType contained contains=swiftTypePair,swiftType
+syn region swiftType contained contains=swiftTypePair,swiftType nextgroup=swiftOptionalType
       \ matchgroup=Delimiter start=/\[/ end=/\]/
 syn match swiftTypePair contained skipwhite skipempty nextgroup=swiftTypeParameters,swiftTypeDeclaration
       \ /\<[A-Za-z_][A-Za-z_0-9\.]*\>[!?]\?/
 " (Type[, Type]) (tuple)
 " FIXME: we should be able to use skip="," and drop swiftParamDelim
-syn region swiftType contained contains=swiftType,swiftParamDelim
+syn region swiftType contained contains=swiftType,swiftParamDelim nextgroup=swiftOptionalType
       \ matchgroup=Delimiter start="[^@]\?(" end=")" matchgroup=NONE skip=","
 syn match swiftParamDelim contained
       \ /,/
 " <Generic Clause> (generics)
-syn region swiftTypeParameters contained contains=swiftVarName,swiftConstraint
+syn region swiftTypeParameters contained contains=swiftVarName,swiftConstraint nextgroup=swiftOptionalType
       \ matchgroup=Delimiter start="<" end=">" matchgroup=NONE skip=","
 syn keyword swiftConstraint contained
       \ where
+syn match swiftOptionalType contained
+      \ /[!?]/
 
 syn match swiftTypeDeclaration skipwhite skipempty nextgroup=swiftType,swiftInOutKeyword
       \ /:/
@@ -187,6 +189,7 @@ hi def link swiftMultiwordKeyword Statement
 hi def link swiftTypeDefinition Define
 hi def link swiftMultiwordTypeDefinition Define
 hi def link swiftType Type
+hi def link swiftOptionalType Type
 hi def link swiftTypePair Type
 hi def link swiftTypeName Function
 hi def link swiftConstraint Special
